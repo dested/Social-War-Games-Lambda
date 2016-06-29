@@ -1,1 +1,0 @@
-﻿import * as f from "./getGameState"; export function handler(event, context) { f.handler(event, context); }

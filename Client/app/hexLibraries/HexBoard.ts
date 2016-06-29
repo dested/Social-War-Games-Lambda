@@ -65,18 +65,12 @@ export class HexBoard {
                 if (xItem == 0) continue;
                 const factionIndex = parseInt(yItem[x + 1]);
 
-
                 let gridHexagon = new GridHexagon();
                 gridHexagon.x = x / 2;
                 gridHexagon.y = 0;
                 gridHexagon.z = y;
                 gridHexagon.height = xItem;
-                if (factionIndex == 0) {
-                    gridHexagon.hexColor = baseColor;
-
-                } else {
-                    gridHexagon.hexColor = factionColors[factionIndex - 1];
-                }
+                gridHexagon.hexColor = factionColors[factionIndex - 1];
                 gridHexagon.buildPaths();
                 this.addHexagon(gridHexagon);
             }

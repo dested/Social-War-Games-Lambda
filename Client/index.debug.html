@@ -34,17 +34,8 @@
 
         System.config({
             packages: {
-                // meaning [baseURL]/local/package when no other rules are present
-                // path is normalized using map and paths configuration
-                'app': {
-                    main: 'main.ts',
-                    defaultExtension: 'ts',
-                    meta: {
-                        '*': {
-                            format: 'esm'
-                        }
-                    }
-                }
+                'app': { main: 'main.ts', defaultExtension: 'ts', meta: { '*': { format: 'esm' } } },
+                '../Common': {  defaultExtension: 'ts', meta: { '*': { format: 'esm' } } }
             },
             transpiler: 'typescript',
             baseURL: '',
