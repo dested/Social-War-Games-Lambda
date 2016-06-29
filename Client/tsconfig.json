@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "removeComments": false,
+    "outFile": "dist/app.js",
+    "target": "es5",
+    "inlineSourceMap": true
+  },
+  "files": [ "app/main.ts" ]
+}
