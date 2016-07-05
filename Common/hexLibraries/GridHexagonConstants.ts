@@ -33,3 +33,4 @@ export class GridHexagonConstants {
 
 }
 
+export type GameUnitType = "Infantry" | "Tank" | "Base";

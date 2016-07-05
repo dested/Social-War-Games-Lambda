@@ -87,17 +87,24 @@ export class GridHexagon {
          else
          context.strokeStyle = this.$getDrawingColor().color;
          */
-        context.strokeStyle = this.$getDrawingColor().darkBorder;
-        context.stroke(this.topPath);
-        context.fillStyle = this.$getDrawingColor().color;
-        context.fill(this.topPath);
-    }
+         if (this.highlightColor || this.icon) {
+            context.strokeStyle = this.$getDrawingColor().darkBorder;
+            context.stroke(this.topPath);
+        } else {
+            context.strokeStyle = this.$getDrawingColor().darkBorder;
+            context.stroke(this.topPath);
+        }
+         context.fillStyle = this.$getDrawingColor().color;
+         context.fill(this.topPath);
+      }
 
     drawIcon(context) {
         if (this.icon) {
             context.save();
             context.translate(-this.icon.base.x, -this.icon.base.y);
-            context.drawImage(this.icon.image, 0, 0, this.icon.size.width, this.icon.size.height);
+            let width = this.icon.size.width;
+            let height = this.icon.size.height;
+            context.drawImage(this.icon.image, 0, 0, width, height);
             context.restore();
         }
     }
@@ -148,7 +155,6 @@ export class GridHexagon {
         const center = this.hexCenter();
         if (this.drawCache) {
             context.drawImage(this.drawCache, -center.x, -center.y);
-            //this.drawCache=null;
         } else {
             const c = getCacheImage(this.height, this.icon ? this.icon.name : '', this.highlightColor || this.hexColor);
             if (!c) {
@@ -167,7 +173,7 @@ export class GridHexagon {
                 this.drawRightDepth(ctx);
 
                 ctx.save();
-                //ctx.lineWidth = 1;
+                ctx.lineWidth = 1;
                 //ctx.lineCap = "round";
                 //ctx.lineJoin = "round";
                 this.drawTop(ctx);

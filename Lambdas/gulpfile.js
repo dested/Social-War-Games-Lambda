@@ -26,10 +26,12 @@ gulp.task('default',
         for (var i = 0; i < lambdaFunctions.length; i++) {
             var lambdaFunction = lambdaFunctions[i];
 
-            string_src("main.ts", `import * as f from "./${lambdaFunction}";export function handler(event, context) {f.handler(event,context);}`)
+            string_src("main.ts", `import * as f from "./${lambdaFunction}";export function handler(event, context) {console.log(JSON.stringify(f.handler));f.handler(event,context);}`)
                 .pipe(ts(ts.createProject('tsconfig.json')))
+                .pipe(headerfooter.header("require('./RawDeflate.js');"))
                 .pipe(headerfooter.header("require('./system.js');"))
-                .pipe(headerfooter.footer(`exports.handler = function (event, context) {console.log("${lambdaFunction}");System.import("Lambdas/main").then(function (module) {console.log("3");module.handler(event, context);console.log("4");});}`))
+                .pipe(headerfooter.header("global.aws = require('aws-sdk');"))
+                .pipe(headerfooter.footer(`exports.handler = function (event, context) {console.log("${lambdaFunction}");System.import("Lambdas/main").then(function (module) {console.log("3");module.handler(event, context);console.log("4");}).catch(ee=>{console.error(ee);});}`))
                 .pipe(addsrc('./libs/system.js'))
                 .pipe(addsrc('./server_modules/**/*'))
                 .pipe(zip('archive-' + lambdaFunction + '.zip'))

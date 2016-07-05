@@ -1,6 +1,4 @@
-﻿import {Color} from "../Common/app/Common/Color";
-
-
+﻿import {Color} from "../Common/Color";
 var m = new Color(1,1,1);
 
 
@@ -14,5 +12,5 @@ export var handler = (event, context) => {
 
     }
 
-    context.done(null, 'Hello World');  // SUCCESS with message
+    context.succeed('Hello World');  // SUCCESS with message
 };
