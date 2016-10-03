@@ -48,6 +48,7 @@ export class HexBoard {
     initialize(state) {
         const str = state.board.boardStr;
         this.setSize(state.board.width, state.board.height);
+var baseColor=new HexagonColor('#000000');
 
         const factionColors = [];
         for (var i = 0; i < state.factions.length; i++) {
