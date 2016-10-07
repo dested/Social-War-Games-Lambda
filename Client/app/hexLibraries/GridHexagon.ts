@@ -17,10 +17,10 @@ export class GridHexagon {
     bottomDepthPath = null;
     rightDepthPath = null;
     drawCache = null;
-     
+
 
     getDepthHeight() {
-        return (this.height) * GridHexagonConstants.depthHeight();
+        return Math.max(1,(this.height) * GridHexagonConstants.depthHeight());
     }
 
     setUnit(name) {
@@ -87,16 +87,16 @@ export class GridHexagon {
          else
          context.strokeStyle = this.$getDrawingColor().color;
          */
-         if (this.highlightColor || this.icon) {
+        if (this.highlightColor || this.icon) {
             context.strokeStyle = this.$getDrawingColor().darkBorder;
             context.stroke(this.topPath);
         } else {
             context.strokeStyle = this.$getDrawingColor().darkBorder;
             context.stroke(this.topPath);
         }
-         context.fillStyle = this.$getDrawingColor().color;
-         context.fill(this.topPath);
-      }
+        context.fillStyle = this.$getDrawingColor().color;
+        context.fill(this.topPath);
+    }
 
     drawIcon(context) {
         if (this.icon) {
@@ -114,7 +114,7 @@ export class GridHexagon {
     }
 
     envelope() {
-        const size = {width:0,height:0};
+        const size = {width: 0, height: 0};
         size.width = GridHexagonConstants.width;
         size.height = GridHexagonConstants.height();
 
@@ -132,7 +132,7 @@ export class GridHexagon {
     }
 
     hexCenter() {
-        const center = {x:0,y:0};
+        const center = {x: 0, y: 0};
 
         center.y = GridHexagonConstants.height() / 2;
         if (this.icon) {
@@ -168,9 +168,11 @@ export class GridHexagon {
 
 
                 ctx.translate(center.x, center.y);
-                this.drawLeftDepth(ctx);
-                this.drawBottomDepth(ctx);
-                this.drawRightDepth(ctx);
+                if (this.height > 0) {
+                    this.drawLeftDepth(ctx);
+                    this.drawBottomDepth(ctx);
+                    this.drawRightDepth(ctx);
+                }
 
                 ctx.save();
                 ctx.lineWidth = 1;
@@ -201,21 +203,21 @@ export class GridHexagon {
         const neighbors = [];
 
         if ((this.x % 2 === 0)) {
-            neighbors.push({ x: this.x - 1, y: this.z });
-            neighbors.push({ x: this.x, y: this.z - 1 });
-            neighbors.push({ x: this.x + 1, y: this.z });
+            neighbors.push({x: this.x - 1, y: this.z});
+            neighbors.push({x: this.x, y: this.z - 1});
+            neighbors.push({x: this.x + 1, y: this.z});
 
-            neighbors.push({ x: this.x - 1, y: this.z + 1 });
-            neighbors.push({ x: this.x, y: this.z + 1 });
-            neighbors.push({ x: this.x + 1, y: this.z + 1 });
+            neighbors.push({x: this.x - 1, y: this.z + 1});
+            neighbors.push({x: this.x, y: this.z + 1});
+            neighbors.push({x: this.x + 1, y: this.z + 1});
         } else {
-            neighbors.push({ x: this.x - 1, y: this.z - 1 });
-            neighbors.push({ x: this.x, y: this.z - 1 });
-            neighbors.push({ x: this.x + 1, y: this.z - 1 });
+            neighbors.push({x: this.x - 1, y: this.z - 1});
+            neighbors.push({x: this.x, y: this.z - 1});
+            neighbors.push({x: this.x + 1, y: this.z - 1});
 
-            neighbors.push({ x: this.x - 1, y: this.z });
-            neighbors.push({ x: this.x, y: this.z + 1 });
-            neighbors.push({ x: this.x + 1, y: this.z });
+            neighbors.push({x: this.x - 1, y: this.z});
+            neighbors.push({x: this.x, y: this.z + 1});
+            neighbors.push({x: this.x + 1, y: this.z});
         }
         return neighbors;
     }
@@ -242,22 +244,22 @@ function setCacheImage(height, icon, hexColor, img) {
 
 
 interface Path2D {
-    addPath(path: Path2D, transform?: SVGMatrix);
-    closePath(): void;
-    moveTo(x: number, y: number): void;
-    lineTo(x: number, y: number): void;
-    bezierCurveTo(cp1x: number, cp1y: number, cp2x: number, cp2y: number, x: number, y: number): void;
-    quadraticCurveTo(cpx: number, cpy: number, x: number, y: number): void;
-    arc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise?: boolean): void;
-    arcTo(x1: number, y1: number, x2: number, y2: number, radius: number): void;
+    addPath(path:Path2D, transform?:SVGMatrix);
+    closePath():void;
+    moveTo(x:number, y:number):void;
+    lineTo(x:number, y:number):void;
+    bezierCurveTo(cp1x:number, cp1y:number, cp2x:number, cp2y:number, x:number, y:number):void;
+    quadraticCurveTo(cpx:number, cpy:number, x:number, y:number):void;
+    arc(x:number, y:number, radius:number, startAngle:number, endAngle:number, anticlockwise?:boolean):void;
+    arcTo(x1:number, y1:number, x2:number, y2:number, radius:number):void;
     /*ellipse(x: number, y: number, radiusX: number, radiusY: number, rotation: number, startAngle: number, endAngle: number, anticlockwise?: boolean): void;*/
-    rect(x: number, y: number, w: number, h: number): void;
+    rect(x:number, y:number, w:number, h:number):void;
 }
 interface Path2DConstructor {
-    new (): Path2D;
-    new (d: string): Path2D;
-    new (path: Path2D, fillRule?: string): Path2D;
-    prototype: Path2D;
+    new ():Path2D;
+    new (d:string):Path2D;
+    new (path:Path2D, fillRule?:string):Path2D;
+    prototype:Path2D;
 }
-declare var Path2D: Path2DConstructor;
+declare var Path2D:Path2DConstructor;
  

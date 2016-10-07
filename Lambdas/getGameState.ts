@@ -27,31 +27,34 @@ export class GameBoard {
         var stateData = new GameStateData();
         stateData.board = new HexBoard();
         var boardStr = "";
-        stateData.board.width = 84;
-        stateData.board.height = 84;
+        stateData.board.width = 84 * 5;
+        stateData.board.height = 84 * 5;
 
         noise.seed(Math.random());
         for (var y = 0; y < stateData.board.height; y++) {
             for (var x = 0; x < stateData.board.width; x++) {
+                var str = 0;
                 if (random(0, 100) < 10) {
-                    boardStr += "0";
+                    str = 0;
                 }
                 else {
                     if (random(0, 100) < 15)
-                        boardStr += 2;
+                        str = 2;
                     else if (random(0, 100) < 6)
-                        boardStr += 1;
+                        str = 1;
                     else
-                        boardStr += 1;
+                        str = 1;
                 }
 
-                var value = noise.simplex2(x / 30, y / 30);
-                boardStr += ((Math.abs(value * 3 )) | 0) + 1;
+
+                var value = Math.abs(noise.simplex2(x / 60, y / 60))*60;
+                boardStr += (value/6|0).toString();
+                boardStr += ((value/20|0)+1).toString();
             }
             boardStr += "|";
         }
         stateData.board.boardStr = boardStr;
-        var boardData=boardStr.split('|').map(a=>a.split('').filter((b,i)=>i%2==1).map(b=>parseInt(b)));
+        var boardData = boardStr.split('|').map(a=>a.split('').filter((b, i)=>i % 2 == 1).map(b=>parseInt(b)));
         stateData.lastGeneration = new Date();
         stateData.factions = [];
         for (var f = 0; f < 3; f++) {
@@ -72,7 +75,7 @@ export class GameBoard {
             }
 
 
-            var numOfUnits = 300;
+            var numOfUnits = 0;
             for (var i = 0; i < numOfUnits; i++) {
                 var unitType = random(0, 100);
 
@@ -81,10 +84,10 @@ export class GameBoard {
                 while (true) {
                     x = random(0, stateData.board.width);
                     y = random(0, stateData.board.height);
-                    if(boardData[y][x]!=f+1){
+                    if (boardData[y][x] != f + 1) {
                         continue;
                     }
-                    console.log(x,y,boardData[y][x],f+1)
+                    console.log(x, y, boardData[y][x], f + 1)
                     if (gameFaction.units.filter(a => a.x === x && a.y === y).length === 0) {
                         break;
                     }

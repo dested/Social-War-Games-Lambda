@@ -1,6 +1,7 @@
 ﻿import {GridHexagonConstants} from "../../../Common/hexLibraries/GridHexagonConstants";
 import {DrawingUtilities, Node, orderBy, distance, HexagonColor } from "../../../Common/hexLibraries/HexUtils";
 import {GridHexagon} from "./GridHexagon";
+import {xit} from "angular2/core";
 
 export class HexBoard {
     hexList = [];
@@ -48,7 +49,7 @@ export class HexBoard {
     initialize(state) {
         const str = state.board.boardStr;
         this.setSize(state.board.width, state.board.height);
-var baseColor=new HexagonColor('#000000');
+        var baseColor=new HexagonColor('#AFFFFF');
 
         const factionColors = [];
         for (var i = 0; i < state.factions.length; i++) {
@@ -63,7 +64,7 @@ var baseColor=new HexagonColor('#000000');
             const yItem = ys[y].split('');
             for (let x = 0; x < yItem.length; x += 2) {
                 const xItem = parseInt(yItem[x]);
-                if (xItem == 0) continue;
+                // if (xItem == 0) continue;
                 const factionIndex = parseInt(yItem[x + 1]);
 
 
@@ -71,8 +72,8 @@ var baseColor=new HexagonColor('#000000');
                 gridHexagon.x = x / 2;
                 gridHexagon.y = 0;
                 gridHexagon.z = y;
-                gridHexagon.height = xItem;
-                if (factionIndex == 0) {
+                gridHexagon.height = xItem==0?0:xItem;
+                if (xItem == 0) {
                     gridHexagon.hexColor = baseColor;
 
                 } else {
