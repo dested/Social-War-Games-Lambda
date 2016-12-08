@@ -47,9 +47,10 @@ export class GameBoard {
                 }
 
 
-                var value = Math.abs(noise.simplex2(x / 60, y / 60))*60;
-                boardStr += (value/6|0).toString();
-                boardStr += ((value/20|0)+1).toString();
+                var value = Math.abs(noise.simplex2(x / 90, y / 90))*90;
+                boardStr += (value/10|0).toString();
+                boardStr += ((value/30|0)+1).toString();
+                // console.log(value,(value|0).toString(),((value|0)+1).toString());
             }
             boardStr += "|";
         }

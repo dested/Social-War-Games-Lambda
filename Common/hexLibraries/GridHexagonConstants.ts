@@ -27,7 +27,7 @@ export class GridHexagonConstants {
     };
 
 
-    static width = 100;
+    static width = 35 ;
     static heightSkew = .7;
     static depthHeightSkew = .3;
 
